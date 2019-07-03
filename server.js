@@ -4,10 +4,6 @@ var express = require("express");
 // invoke express and store the result in the variable app
 var app = express();
 
-// use app's get method and pass it the base route '/' and a callback
-app.get('/', function(request, response) {
-  response.render('index');
-})
 
 // this is the line that tells our server to use the "/static" folder for static content
 app.use(express.static(__dirname + "/static"));
@@ -15,6 +11,26 @@ app.use(express.static(__dirname + "/static"));
 // try printing out __dirname using console.log to see what it is and why we use it
 console.log("Dir name", __dirname);
 
+// use app's get method and pass it the base route '/' and a callback
+app.get('/', function(request, response) {
+  response.render('index');
+})
+
+
+// This sets the location where express will look for the ejs views
+app.set('views', __dirname + '/views');
+// Now lets set the view engine itself so that express knows that we are using ejs as opposed to another templating engine like jade
+app.set('view engine', 'ejs');
+
+app.get("/cars", function (request, response){
+    response.render('cars');
+})
+app.get("/cats", function (request, response){
+    response.render('cats');
+})
+app.get("/cars/new", function (request, response){
+    response.render('new_cars');
+})
 
 // tell the express app to listen on port 8000, always put this at the end of your server.js file
 app.listen(8000, function() {
